@@ -199,28 +199,28 @@ int insert(Node* head, int key)  // 삽입 함수
 
 int deleteLeafNode(Node* head, int key) // 삭제 함수
 {
-    Node* parent = head;
-    Node* cur = head->left;
+    Node* parent = head;    // 부모 노드 선언(포인터)
+    Node* cur = head->left; // 현재 노드 선언(포인터)
 
-    while (cur != NULL && cur->key != key) {
-        parent = cur;
-        if (key < cur->key) {
-            cur = cur->left;
-        } else {
-            cur = cur->right;
+    while (cur != NULL && cur->key != key) {    // 현재 노드가 NULL이 아니고 key값이 현재 노드의 key값과 같지 않으면
+        parent = cur;   // 부모 노드를 현재 노드 주소값으로 변경
+        if (key < cur->key) {   // key값이 현재 노드의 key값보다 작으면
+            cur = cur->left;    // 왼쪽 자식 노드로 이동
+        } else {    // key값이 현재 노드의 key값보다 크면
+            cur = cur->right;   // 오른쪽 자식 노드로 이동
         }
     }
 
-    if (cur == NULL || (cur->left != NULL || cur->right != NULL)) {
-        printf("the node [%d] is not a leaf.\n", key);
+    if (cur == NULL || (cur->left != NULL || cur->right != NULL)) {   // 현재 노드가 NULL이거나 현재 노드가 리프 노드가 아니면
+        printf("the node [%d] is not a leaf.\n", key);  // 리프 노드가 아니라는 문구 출력
         return 0;
     }
 
-    if (parent->left == cur) {
-        parent->left = NULL;
-    } else {
-        parent->right = NULL;
-    }
+    if (parent->left == cur) {  // 부모 노드의 왼쪽 자식노드가 현재 노드와 같으면
+        parent->left = NULL;    // 부모 노드의 왼쪽 자식노드 NULL로 변경
+    } else {    // 부모 노드의 오른쪽 자식노드가 현재 노드와 같으면
+        parent->right = NULL;   // 부모 노드의 오른쪽 자식노드 NULL로 변경
+    }   
 
     free(cur);
     return 1;
@@ -228,34 +228,34 @@ int deleteLeafNode(Node* head, int key) // 삭제 함수
 
 Node* searchRecursive(Node* ptr, int key)  // 재귀적 탐색 함수
 {
-    if (ptr == NULL || ptr->key == key) {
-        return ptr;
+    if (ptr == NULL || ptr->key == key) {   // 현재 노드가 NULL이거나 현재 노드의 key값이 찾는 값과 같으면
+        return ptr; // 현재 노드 주솟값 리턴
     }
 
-    if (key < ptr->key) {
-        return searchRecursive(ptr->left, key);
-    } else {
-        return searchRecursive(ptr->right, key);
+    if (key < ptr->key) {   // 찾는값이 현재 노드의 key값보다 작으면
+        return searchRecursive(ptr->left, key); // 왼쪽 자식 노드로 이동
+    } else {    // 아니라면
+        return searchRecursive(ptr->right, key);    // 오른쪽 자식 노드로 이동
     }
 }
 
 Node* searchIterative(Node* head, int key)  // 반복적 탐색 함수
 {
-    Node* cur = head->left;
+    Node* cur = head->left; // 현재 노드 가리키는 포인터 선언
 
-    while (cur != NULL) {
-        if (cur->key == key) {
-            return cur;
+    while (cur != NULL) {   // 현재 가리키는 노드의 주소가 NULL이 아닐 때까지 반복
+        if (cur->key == key) {      // 현재 노드의 key값이 찾는 값과 같으면
+            return cur; // 현재 노드 주솟값 리턴
         }
 
-        if (key < cur->key) {
-            cur = cur->left;
-        } else {
-            cur = cur->right;
+        if (key < cur->key) {   // 찾는 값이 현재 노드의 key값보다 작으면
+            cur = cur->left;    // 왼쪽 자식 노드로 이동
+        } else {    //아니라면
+            cur = cur->right;   // 오른쪽 자식 노드로 이동
         }
     }
 
-    return NULL;
+    return NULL;    // 못 찾은 경우 NULL 리턴
 }
 
 // 이진 탐색 트리의 모든 노드를 메모리에서 해제하는 함수
@@ -268,13 +268,13 @@ int freeBST(Node* head)
     }
 
     // 왼쪽 서브트리가 있는 경우
-    if (head->left != NULL) {
-        freeBST(head->left); // 왼쪽 서브트리의 모든 노드 메모리 해제
+    if (head->left != NULL) { // 왼쪽 서브트리가 있는 경우
+        freeBST(head->left); // 왼쪽 자식 주소 전달(재귀적 호출)
     }
 
     // 오른쪽 서브트리가 있는 경우
-    if (head->right != NULL && head->right != head) {
-        freeBST(head->right); // 오른쪽 서브트리의 모든 노드 메모리 해제
+    if (head->right != NULL && head->right != head) {   // 오른쪽 서브트리가 있는 경우
+        freeBST(head->right); // 오른쪽 자식 주소 전달(재귀적 호출) 
     }
 
     free(head); // 현재 노드의 메모리 해제
